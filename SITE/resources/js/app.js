@@ -1,7 +1,12 @@
 const keyboardDiv = document.querySelector(".keyboard");
+const hangmanImage = document.querySelector(".hangman-box img");
 const wordDisplay = document.querySelector(".word-display");
+const guessesText = document.querySelector(".guesses-text b");
 // Sets up word list
-let currentWord;
+let currentWord,
+  wrongGuessCount = 0;
+const maxGuesses = 6;
+
 //
 // Function to get a random word and hint from the word list.
 const getRandomWord = () => {
@@ -34,8 +39,12 @@ const initGame = (button, clickedLetter) => {
       }
     });
   } else {
-    console.log(clickedLetter, " does not exist in word");
+    // If clicked letter doesn't exist then update the wrongGuessCount and hangman image
+    wrongGuessCount++;
+    hangmanImage.src = `/SITE/resources/images/hangman-${wrongGuessCount}.svg`;
   }
+  button.disabled = true;
+  guessesText.innerText = `${wrongGuessCount} / ${maxGuesses}`;
 };
 // Create keyboard buttons from a-z
 for (let i = 97; i <= 122; i++) {
