@@ -31,19 +31,30 @@ const getRandomWord = () => {
 };
 
 const initGame = (button, clickedLetter) => {
+  // Check if the current word includes the clicked letter
   if (currentWord.includes(clickedLetter)) {
+    // Iterate over each letter in the current word
     [...currentWord].forEach((letter, index) => {
+      // If a letter matches the clicked letter
       if (letter === clickedLetter) {
+        // Update the inner text of the corresponding list item in wordDisplay
         wordDisplay.querySelectorAll("li")[index].innerText = letter;
+        // Add the "guessed" class to the corresponding list item in wordDisplay
         wordDisplay.querySelectorAll("li")[index].classList.add("guessed");
       }
     });
   } else {
-    // If clicked letter doesn't exist then update the wrongGuessCount and hangman image
+    // If the clicked letter is not found in the current word
+    // Increment the wrongGuessCount variable
     wrongGuessCount++;
+    // Update the source of the hangmanImage based on the wrongGuessCount
     hangmanImage.src = `/SITE/resources/images/hangman-${wrongGuessCount}.svg`;
   }
+
+  // Disable the button to prevent further guesses
   button.disabled = true;
+
+  // Update the guessesText to display the current number of wrong guesses
   guessesText.innerText = `${wrongGuessCount} / ${maxGuesses}`;
 };
 // Create keyboard buttons from a-z
